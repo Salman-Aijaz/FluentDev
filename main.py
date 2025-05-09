@@ -1,42 +1,12 @@
-from langgraph.graph import StateGraph, END
-from nodes.input_nodes import input_node
-from nodes.generate_script_node import generate_script_node
-from nodes.output_node import output_node
-from pydantic import BaseModel
+from fastapi import FastAPI
+from api.routes import router
+from dotenv import load_dotenv
+import uvicorn
 
-class GraphState(BaseModel):
-    topic: str
-    technical: bool
-    challenging: bool
-    detailed: bool
-    budget: bool
-    script: str = ""
+load_dotenv()
 
-builder = StateGraph(GraphState)
-
-builder.add_node("InputCollector", input_node)
-builder.add_node("ScriptGenerator", generate_script_node)
-builder.add_node("OutputHandler", output_node)
-
-builder.set_entry_point("InputCollector")
-builder.add_edge("InputCollector", "ScriptGenerator")
-builder.add_edge("ScriptGenerator", "OutputHandler")
-builder.add_edge("OutputHandler", END)
-
-graph = builder.compile()
+app = FastAPI(title="FluentDev Script Generator API")
+app.include_router(router)
 
 if __name__ == "__main__":
-    user_topic = input("🧠 Enter your topic: ")
-    technical = input("Is the client technical? (y/n): ").lower() == "y"
-    challenging = input("Is the client challenging? (y/n): ").lower() == "y"
-    detailed = input("Should the responses be detailed? (y/n): ").lower() == "y"
-    budget = input("Include budget talk? (y/n): ").lower() == "y"
-
-    result = graph.invoke({
-        "topic": user_topic,
-        "technical": technical,
-        "challenging": challenging,
-        "detailed": detailed,
-        "budget": budget
-    })
-
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

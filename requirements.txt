@@ -4,3 +4,6 @@ google-generativeai
 python-dotenv
 logger
 pydantic
+fastapi 
+uvicorn 
+python-dotenv
