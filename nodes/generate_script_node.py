@@ -17,7 +17,25 @@ prompt = PromptTemplate.from_template(meeting_script_prompt)
 def generate_script_node(state):
     try:
         topic = state["topic"]
-        final_prompt = prompt.format(topic=topic)
+        technical = state.get("technical", False)
+        challenging = state.get("challenging", False)
+        detailed = state.get("detailed", False)
+        budget = state.get("budget", False)
+
+        # Construct conditional inserts
+        technical_note = "🧠 Assume the client is technically knowledgeable." if technical else ""
+        challenging_note = "😤 Assume the client is challenging, skeptical, or demanding." if challenging else ""
+        detailed_note = "📋 Provide detailed explanations and justifications for each response." if detailed else ""
+        budget_note = "💰 Include budget and cost discussions in the conversation." if budget else ""
+
+        final_prompt = prompt.format(
+            topic=topic,
+            technical_note=technical_note,
+            challenging_note=challenging_note,
+            detailed_note=detailed_note,
+            budget_note=budget_note
+        )
+
         response = llm.invoke(final_prompt)
         logger.info("🧠 Generating concise bid with Gemini...")
         return {"script": response.content}

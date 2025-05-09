@@ -6,6 +6,10 @@ from typing import TypedDict
 
 class GraphState(TypedDict):
     topic: str
+    technical: bool
+    challenging: bool
+    detailed: bool
+    budget: bool
     script: str
 
 builder = StateGraph(GraphState)
@@ -23,4 +27,16 @@ graph = builder.compile()
 
 if __name__ == "__main__":
     user_topic = input("🧠 Enter your topic: ")
-    result = graph.invoke({"topic": user_topic})
+    technical = input("Is the client technical? (y/n): ").lower() == "y"
+    challenging = input("Is the client challenging? (y/n): ").lower() == "y"
+    detailed = input("Should the responses be detailed? (y/n): ").lower() == "y"
+    budget = input("Include budget talk? (y/n): ").lower() == "y"
+
+    result = graph.invoke({
+        "topic": user_topic,
+        "technical": technical,
+        "challenging": challenging,
+        "detailed": detailed,
+        "budget": budget
+    })
+
