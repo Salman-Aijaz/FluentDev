@@ -2,7 +2,7 @@ from langchain.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from logger import logger
 from prompt_templates import meeting_script_prompt
-import os
+import os   
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -16,11 +16,11 @@ prompt = PromptTemplate.from_template(meeting_script_prompt)
 
 def generate_script_node(state):
     try:
-        topic = state["topic"]
-        technical = state.get("technical", False)
-        challenging = state.get("challenging", False)
-        detailed = state.get("detailed", False)
-        budget = state.get("budget", False)
+        topic = state.topic
+        technical = state.technical
+        challenging = state.challenging
+        detailed = state.detailed
+        budget = state.budget
 
         # Construct conditional inserts
         technical_note = "🧠 Assume the client is technically knowledgeable." if technical else ""

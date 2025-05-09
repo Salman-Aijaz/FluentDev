@@ -2,15 +2,15 @@ from langgraph.graph import StateGraph, END
 from nodes.input_nodes import input_node
 from nodes.generate_script_node import generate_script_node
 from nodes.output_node import output_node
-from typing import TypedDict
+from pydantic import BaseModel
 
-class GraphState(TypedDict):
+class GraphState(BaseModel):
     topic: str
     technical: bool
     challenging: bool
     detailed: bool
     budget: bool
-    script: str
+    script: str = ""
 
 builder = StateGraph(GraphState)
 
