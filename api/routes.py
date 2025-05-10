@@ -8,8 +8,6 @@ from pydantic import BaseModel
 
 router = APIRouter()
 
-
-
 builder = StateGraph(GraphState)
 builder.add_node("InputCollector", input_node)
 builder.add_node("ScriptGenerator", generate_script_node)
