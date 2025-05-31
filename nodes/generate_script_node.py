@@ -21,19 +21,25 @@ def generate_script_node(state):
         challenging = state.challenging
         detailed = state.detailed
         budget = state.budget
+        friendly = state.friendly
+        formal = state.formal
 
         # Construct conditional inserts
         technical_note = "🧠 Assume the client is technically knowledgeable." if technical else ""
         challenging_note = "😤 Assume the client is challenging, skeptical, or demanding." if challenging else ""
         detailed_note = "📋 Provide detailed explanations and justifications for each response." if detailed else ""
         budget_note = "💰 Include budget and cost discussions in the conversation." if budget else ""
+        friendly_note = "😊 Make the client friendly and open to discussion." if friendly else ""
+        formal_note = "🕴️ Maintain a formal tone throughout the conversation." if formal else ""
 
         final_prompt = prompt.format(
             topic=topic,
             technical_note=technical_note,
             challenging_note=challenging_note,
             detailed_note=detailed_note,
-            budget_note=budget_note
+            budget_note=budget_note,
+            friendly_note=friendly_note,
+            formal_note=formal_note            
         )
 
         response = llm.invoke(final_prompt)

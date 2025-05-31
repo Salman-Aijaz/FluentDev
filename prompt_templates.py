@@ -9,6 +9,8 @@ You're simulating a 30-minute meeting between a 👤 Client and a 👨‍💻 De
 {challenging_note}
 {detailed_note}
 {budget_note}
+{friendly_note}
+{formal_note}
 
 ✅ Output only the script, alternating between 👤 Client and 👨‍💻 Developer. Do not include any extra commentary.
 """
